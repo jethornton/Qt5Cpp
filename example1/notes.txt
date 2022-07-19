@@ -1,0 +1,40 @@
+Getting started with Qt development is rather easy. As with other C++ development discussed earlier, all tools and libraries are native in the Debian / Ubuntu repositories. The following packages should take care of the basic setup:
+
+apt-get install gcc g++ gdb cmake make build-essential qtcreator qt5-default qtdeclarative5-dev qt5-doc qt5-doc-html qtbase5-doc-html qtbase5-examples
+
+Once installed, this small "Hello World" example, inspired by this tutorial but updated for Qt 5, will verify that everything is setup correctly.
+
+Notice that it is important that this file has the extension .cpp, e.g. helloworld.cpp.
+
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QPushButton>
+
+
+int main( int argc, char **argv ) {
+  QApplication a( argc, argv );
+
+  QPushButton hello( "Hello world!", 0 );
+  hello.resize( 100, 30 );
+
+  hello.show();
+  return a.exec();
+}
+
+Once this file is in place, a Qt .pro project must be generated. (This should only be executed once, to generate the file).
+
+qmake -project
+
+It will create a file based on the name of the current directory, with the extension .pro. Edit the file to include the following two lines:
+
+QT += core gui
+QT += widgets
+
+If backwards compatibility with older Qt versions is a concern, change the last line to:
+
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
+Now, the application can be compiled and linked into a binary:
+
+qmake && make && ./helloworld
+
+It should generate a Makefile, make or compile the source code, and start the binary. If everything works out, a new application window with a small button like below will appear.
